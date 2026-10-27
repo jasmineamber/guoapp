@@ -76,7 +76,9 @@ Flutter 多端独立短剧 / 影视应用，原名「短剧库 APP」。站源�
 
 ### GitHub Actions
 
-推送 `main` / `master`、`v*` 标签、提交 PR，或手动运行 **Build app packages**，会先检查再构建两版（默认与 `--all-sources`）：
+推送分支代码不会自动运行 Actions；PR 和 `v*` 标签仍会触发旧构建工作流。需要 iOS 安装包时，在 Actions 页面手动运行 **Build iOS IPA**，从该次运行的 Artifacts 下载 IPA；这是未签名包，需自行签名后安装。
+
+旧的 **Build app packages** 工作流可由 PR 或手动运行，会构建 Android 等平台产物：
 
 | 产物 | 内容 |
 | --- | --- |
@@ -84,7 +86,7 @@ Flutter 多端独立短剧 / 影视应用，原名「短剧库 APP」。站源�
 | `*-windows` | 完整 ZIP 和 SHA256 |
 | `*-ios` | 未签名 `.ipa`、`.app` ZIP 和 SHA256；IPA 需使用 AltStore / Sideloadly / TrollStore 等工具自签后安装 |
 
-推送 `main` 且 Android 与 iOS 构建成功时，自动创建 / 更新 GitHub Release（tag `app-v{version}`）；也可以在 Actions 手动运行 **Build app packages**，从对应运行的 Artifacts 下载 IPA。IPA 未签名，不能直接安装。发布新版本前需先在 `pubspec.yaml` 提升 `version`，否则会覆盖同名 tag 的 Release。
+旧工作流仅在手动运行且 Android 构建成功时创建 / 更新 GitHub Release。IPA 单独由 **Build iOS IPA** 工作流构建，不会同时打包其他平台。
 
 Android 正式发布使用同一签名并递增构建号，在仓库 Secrets 配置：`ANDROID_KEYSTORE_BASE64`、`ANDROID_KEYSTORE_PASSWORD`、`ANDROID_KEY_ALIAS`、`ANDROID_KEY_PASSWORD`。未配置时生成 debug 签名预览包。
 
