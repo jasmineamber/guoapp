@@ -82,9 +82,9 @@ Flutter 多端独立短剧 / 影视应用，原名「短剧库 APP」。站源�
 | --- | --- |
 | `*-android` | 三种架构 APK 和 SHA256 |
 | `*-windows` | 完整 ZIP 和 SHA256 |
-| `*-ios-unsigned` | 未签名 `.app` ZIP 和 SHA256，不能直接当已签名 IPA 安装 |
+| `*-ios` | 未签名 `.ipa`、`.app` ZIP 和 SHA256；IPA 需使用 AltStore / Sideloadly / TrollStore 等工具自签后安装 |
 
-推送 `main` 且 android / ios / windows 全部构建成功时，自动创建 / 更新 GitHub Release（tag `app-v{version}`）。发布新版本前需先在 `pubspec.yaml` 提升 `version`，否则会覆盖同名 tag 的 Release。
+推送 `main` 且 Android 与 iOS 构建成功时，自动创建 / 更新 GitHub Release（tag `app-v{version}`）；也可以在 Actions 手动运行 **Build app packages**，从对应运行的 Artifacts 下载 IPA。IPA 未签名，不能直接安装。发布新版本前需先在 `pubspec.yaml` 提升 `version`，否则会覆盖同名 tag 的 Release。
 
 Android 正式发布使用同一签名并递增构建号，在仓库 Secrets 配置：`ANDROID_KEYSTORE_BASE64`、`ANDROID_KEYSTORE_PASSWORD`、`ANDROID_KEY_ALIAS`、`ANDROID_KEY_PASSWORD`。未配置时生成 debug 签名预览包。
 
